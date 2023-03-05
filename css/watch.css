@@ -1,0 +1,11 @@
+.views-container{
+    margin-top: 30px;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-weight: 600;
+    font-size: 35px;
+    color: #ffff;
+}
+
+video{
+    border-radius: 10px;
+}
