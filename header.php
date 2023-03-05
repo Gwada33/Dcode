@@ -28,23 +28,23 @@ $username = $_SESSION['username'];
 <body>
 <nav>
   <ul>
-    <li><a href="index.php">Accueil</a></li>
+    <li><a href="index">Accueil</a></li>
     <li>
     <div class="search-container">
-  <form action="/search">
-    <input type="text" placeholder="Recherche" name="search">
-    <button type="submit"><span class="material-symbols-outlined">search</span></button>
-  </form>
+    <form action="search.php" method="GET">
+        <input type="text" name="query" placeholder="Recherche...">
+        <button type="submit">Rechercher</button>
+      </form>
 </div>
 
 <?php if(isset($_SESSION['username'])) { ?>
 
-    <li><a href="upload.php">Upload</a></li>
-    <li><a href="profil.php">Mon compte</a></li>
-    <li><a href="logout.php">Déconnexion</a></li>
+    <li><a href="upload">Upload</a></li>
+    <li><a href="profil">Mon compte</a></li>
+    <li><a href="logout">Déconnexion</a></li>
     <?php } else { ?>
-        <li><a href="login.php">Connexion</a></li>
-        <li><a href="register.php">S'enregistrer</a></li>
+        <li><a href="login">Connexion</a></li>
+        <li><a href="register">S'enregistrer</a></li>
     <?php } ?>
   </ul>
 </nav>

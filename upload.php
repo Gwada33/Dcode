@@ -31,6 +31,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $videoName = uniqid('video_') . '.' . pathinfo($_FILES['video']['name'], PATHINFO_EXTENSION);
         // Déplacement du fichier vidéo vers le dossier uploads
         move_uploaded_file($_FILES['video']['tmp_name'], 'videos/' . $videoName);
+        // Chemin de la vidéo téléchargée
+$videoPath = 'videos/' . $videoName;
+
+// Chemin de la vidéo redimensionnée
+$resizedVideoPath = 'videos/resized_' . $videoName;
+
+// Redimensionnement de la vidéo en 16:9 en utilisant ffmpeg
+exec("ffmpeg -i $videoPath -vf scale=iw*sar:ih,setsar=1:1 -filter:v \"crop=16/9*in_h:in_h\" $resizedVideoPath");
+
+// Déplacement du fichier vidéo redimensionné vers le dossier uploads
+if (file_exists($resizedVideoPath)) {
+    unlink($videoPath); // Suppression de l'ancienne vidéo
+    rename($resizedVideoPath, $videoPath); // Renommage de la nouvelle vidéo
+}
 
         // Vérification que le fichier thumbnail a bien été uploadé
         if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
@@ -58,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         // Redirection vers la page d'accueil après l'ajout de la vidéo
-        header('Location: index.php');
+        header('Location: index');
         exit;
     }
 }

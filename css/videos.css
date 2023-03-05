@@ -5,10 +5,12 @@ body{
 
 .videos-container {
     margin: 30px;
-    padding: 20px;
+    padding: 50px;
     display: grid;
     grid-template-columns: repeat(5, minmax(300px, 1fr));
     grid-gap: 20px;
+    justify-content: center;
+    align-items: center;
   }
   
   .video-thumbnail {
@@ -17,6 +19,9 @@ body{
     border-radius: 5px;
     overflow: hidden;
     object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .video-thumbnail img {
@@ -28,10 +33,14 @@ body{
     padding: 10px;
     font-size: 25px;
     font-weight: 800;
-    font-family: 'Merriweather Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: #333;
   }
   
+  .video-thumbnail .video-description{
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+  }
 
           
 #gradient-canvas {

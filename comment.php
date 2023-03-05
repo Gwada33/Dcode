@@ -23,7 +23,7 @@ if (isset($_POST['comment']) && !empty($_POST['comment']) && isset($_SESSION['us
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$video_id, $user_id, $comment, $username]);
 
-    header('Location: watch.php?id='.$video_id.'');
+    header('Location: watch?id='.$video_id.'');
 }
 
 ?>

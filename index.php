@@ -37,11 +37,11 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Affichage de toutes les vidéos sous forme de vignettes cliquables -->
 <div class="videos-container">
     <?php foreach ($videos as $video): ?>
-        <a class="video-grid-item" href="watch.php?id=<?= $video['id'] ?>">
+        <a class="video-grid-item" href="watch?id=<?= $video['id'] ?>">
             <div class="video-thumbnail">
                 <img class="thumbnail" src="thumbnails/<?= $video['thumbnail'] ?>" alt="<?= $video['title'] ?>">
                 <h2 class="video-title"><?= $video['title'] ?></h2>
-                <p><?= $video['description'] ?></p>
+                <p class="video-description"><?= $video['description'] ?></p>
             </div>
         </a>
     <?php endforeach; ?>

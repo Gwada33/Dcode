@@ -120,16 +120,29 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="views-container">
   <ul>
     <?php
-   $sql = "SELECT COUNT(v.id) AS views_count FROM users u LEFT JOIN views v ON u.id = v.user_id WHERE v.video_id = ?";
-   $stmt = $pdo->prepare($sql);
-   $stmt->execute([$id]);
-   $views = $stmt->fetch(PDO::FETCH_ASSOC);
-   
-   echo  $views['views_count'] . " vues";
-   
+    // Récupérer l'ID de la vidéo depuis l'URL
+    $id = $_GET['id'] ?? null;
+    
+    if ($id) {
+        // Ajouter la vue dans la base de données
+        $stmt = $pdo->prepare("INSERT INTO views (user_id, video_id) VALUES (?, ?)");
+        $stmt->execute([$_SESSION['user_id'], $id]);
+        
+        // Récupérer le nombre de vues pour cette vidéo
+        $sql = "SELECT COUNT(v.id) AS views_count FROM users u LEFT JOIN views v ON u.id = v.user_id WHERE v.video_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $views = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Afficher le nombre de vues
+        echo ("<h2>" . $views['views_count'] . " vues</h2>");
+    } else {
+        echo "Impossible de récupérer l'ID de la vidéo";
+    }
     ?>
   </ul>
 </div>
+
 
 
 
@@ -138,14 +151,14 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="comment-section">
     <h2>Commentaires</h2>
     <?php if(isset($_SESSION['username'])) { ?>
-    <form action="watch.php?id=<?= $video['id']?>" method="post">
+    <form action="watch?id=<?= $video['id']?>" method="post">
         <textarea name="comment" placeholder="Votre commentaire" required></textarea>
         <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
         <input type="hidden" name="parent_id" value="0">
         <input type="submit" value="Envoyer">
     </form>
     <?php } else { ?>
-    <p>Pour ajouter un commentaire, <a href="login.php">veuillez vous connecter</a>.</p>
+    <p>Pour ajouter un commentaire, <a href="login">veuillez vous connecter</a>.</p>
     <?php } ?>
     <div class="comments">
         <?php
@@ -158,7 +171,7 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if(!empty($comments)) {
             foreach ($comments as $comment) { ?>
             <div class="comment">
-                <a href="channel.php?username=<?= $comment['username'] ?>"> <?= isset($comment['username']) ? $comment['username'] : "Utilisateur inconnu" ?></a>
+                <a href="channel?username=<?= $comment['username'] ?>"> <?= isset($comment['username']) ? $comment['username'] : "Utilisateur inconnu" ?></a>
                 <p><?= $comment['comment'] ?></p>
                 <?php 
                     // Récupérer les réponses du commentaire
@@ -180,7 +193,7 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php } ?>
                 </div>
                 <?php if(isset($_SESSION['username'])) { ?>
-                <form action="watch.php?id=<?= $video['id']?>" method="post">
+                <form action="watch?id=<?= $video['id']?>" method="post">
                     <textarea name="reply" placeholder="Votre réponse" required></textarea>
                     <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
                     <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
@@ -188,7 +201,7 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <input type="submit" value="Répondre">
                 </form>
                 <?php } else { ?>
-                <p>Pour répondre, <a href="login.php">veuillez vous connecter</a>.</p>
+                <p>Pour répondre, <a href="login">veuillez vous connecter</a>.</p>
                 <?php } ?>
             </div>
             <?php } ?>

@@ -42,22 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $max_file_size = 1024 * 1024 * 2; // 2 MB
             if ($file_size <= $max_file_size) {
                 // Traitement de l'image
-                $img = imagecreatefromstring(file_get_contents($file_tmp_name));
-
-                // Recadrage de l'image en carré
-                $width = imagesx($img);
-                $height = imagesy($img);
-                $new_width = $new_height = min($width, $height);
-                $dst_img = imagecreatetruecolor($new_width, $new_height);
-                imagecopyresampled($dst_img, $img, 0, 0, ($width-$new_width)/2, ($height-$new_height)/2, $new_width, $new_height, $new_width, $new_height);
-                imagedestroy($img);
-
+             
                 // Enregistrement de l'image sur le serveur
                 $file_name = uniqid() . '.' . $file_ext;
-                $file_path = 'uploads/' . $file_name;
-                imagejpeg($dst_img, $file_path);
-                imagedestroy($dst_img);
-
+                $file_path = 'upload-pfp/' . $file_name;
+                
                 // Mise à jour du profil de l'utilisateur
                 $sql = "UPDATE users SET profile_picture = ? WHERE id = ?";
                 $stmt = $pdo->prepare($sql);

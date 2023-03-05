@@ -24,6 +24,6 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$user_id, $_SESSION['user_id']]);
 
 // Rediriger vers la page de l'utilisateur
-header("Location: channel.php/@{$username}");
+header("Location: channel?username={$username}");
 exit();
 ?>

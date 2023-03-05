@@ -107,13 +107,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form action="upload-pfp.php" method="post" enctype="multipart/form-data">
   <input type="file" id="text" name="profile_picture" id="profile_picture" accept="image/*" onchange="previewPicture(this)" required>
-  <img id="image" src="" alt="Preview">
   <input type="submit" value="Upload">
    </form>
 </div>
 
 
-    <p><a href="logout.php">Se déconnecter</a></p>
+    <p><a href="logout">Se déconnecter</a></p>
     <script type="text/javascript" >
     // L'image img#image
     var image = document.getElementById("image");
@@ -132,31 +131,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } 
 </script>
 
-<script>
-    const input = document.getElementById('profile_picture');
-const preview = document.getElementById('preview');
-const cropButton = document.getElementById('crop-button');
-const cropper = new Cropper(preview, {
-  aspectRatio: 1,
-  viewMode: 1,
-  crop(event) {
-    cropButton.disabled = false;
-  },
-});
-input.addEventListener('change', function (event) {
-  const file = event.target.files[0];
-  if (!file.type.startsWith('image/')) {
-    console.error('Le fichier sélectionné n\'est pas une image.');
-    return;
-  }
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function (event) {
-    preview.src = event.target.result;
-    cropper.replace(event.target.result);
-  };
-});
-
-</script>
 </body>
 </html>
