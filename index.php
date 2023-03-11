@@ -65,7 +65,7 @@ function human_time_diff($from, $to = '') {
 </head>
 <body>
 
-<div class="background">
+<div class="light-background">
   <svg viewBox="0 0 100 100" fill="#002ec6" xmlns="http://www.w3.org/2000/svg">
      <circle cx="50" cy="50" r="50" />
   </svg>
@@ -83,7 +83,7 @@ function human_time_diff($from, $to = '') {
 <!-- Affichage de toutes les vidéos sous forme de vignettes cliquables -->
 <div class="videos-container">
     <?php foreach ($videos as $video): ?>
-     <div class="video-all">
+     <div class="video-information">
             <div class="video-thumbnail">
                 <a class="video-grid-item" href="watch?id=<?= $video['id'] ?>">
                 <img class="thumbnail" src="thumbnails/<?= $video['thumbnail'] ?>" alt="<?= $video['title'] ?>"></a>
@@ -137,7 +137,7 @@ if ($time_diff < 60) {
         $stmt->execute([$id]);
         $views = $stmt->fetch(PDO::FETCH_ASSOC);
         
-      
+
 
         $date_str = $result['date_uploaded'];
         

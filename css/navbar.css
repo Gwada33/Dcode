@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap');
+
+body{
+    background: black;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav{
+    position: fixed;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255, 0.08);
+    backdrop-filter: blur(100px);
+}
+
+nav ul{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+nav ul li{
+    list-style: none;
+    display: inline-block;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+nav ul li a img{
+    width: 170px;
+}
+
+nav ul .search-container{
+    width: 100%;
+}
+
+nav ul .search-container .text-search{
+    width: 80%;
+    height: 40px;
+    border: none;
+    border-radius: 9px;
+    backdrop-filter: blur(100px);
+    background: rgba(255,255,255, 0.1);
+}
+
+nav ul .search-container .text-search::placeholder{
+    transform: translateX(10px);
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+nav ul li a .upload-icon{
+    height: 20px;
+    transform: translateX(-20px);
+}
+
+nav ul li .profil-username{
+    color: #ffffff;
+    margin-right: 20px;
+}
+
+.text-search-mobile{
+    display: none;
+}
+
+nav ul li .home-icon{
+    width: 50px;
+    transform: translateY(-5px);
+    display: none;
+}
+
+.text-search-mobile{
+    width: 50px;
+    cursor: pointer;
+    transform: translateX(-30px);
+    height: 50px;
+    background: transparent;
+    border: none;
+}
+
+.icon-text-search{
+    position: absolute;
+    width: 10px;
+    cursor: pointer;
+    height: 10px;
+    transform: translate(-75px, -27px);
+    background: transparent;
+    border: none;
+}
+
+.icon-text-search img{
+    scale: 0.6;
+}
+
+
+/* Medias Devices */
+
+
+@media only screen and (max-width: 568px) {
+    nav{
+        width: 85%;
+        height: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+        border-radius: 25px;
+    }
+
+    nav ul {
+        position: absolute;
+        top: -15%;
+        left: -10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10%;
+    }
+
+    nav ul .search-container{
+        display: none;
+    }
+
+    nav ul li .profil-username{
+        display: none;
+    }
+
+    nav ul li .upload-icon{
+        display: none;
+    }
+
+    .text-search-mobile{
+        display: initial;
+    }
+
+    .icon-text-search{
+        display: none;
+    }
+
+    nav ul li .home-icon{
+        display: initial;
+    }
+
+    nav ul li .home{
+        display: none;
+    }
+
+    nav ul li a .profil-img{
+        scale: 1.2;
+    }
+}

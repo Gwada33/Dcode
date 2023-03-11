@@ -1,0 +1,23 @@
+.light-background{
+    position: fixed;
+    z-index: -100;
+}
+
+.videos-container{
+    width: 100%;
+    height: max-content;
+}
+
+.videos-container .video-information{
+    width: 410px;
+    height: 227px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 200px;
+}
+
+.videos-container .video-information .video-thumbnail{
+    width: 410px;
+    height: 227px;
+}

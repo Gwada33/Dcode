@@ -24,23 +24,33 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
 <nav>
   <ul>
-    <li><a class="home" href="index">Acceuil</a></li>
-    <li>
+    <li><a class="home" href="index"><img src="svg/logo.svg"></a></li>
+    <li><a href="index"><img class="home-icon" src="svg/home-icon.svg"></a></li>
     <div class="search-container">
     <form action="search.php" method="GET">
-        <input class="text-search" type="text" name="query" placeholder="Recherche..."><button type="submit"></button></input>
+        <input class="text-search" type="text" name="query" placeholder="Recherche..."><button class="icon-text-search" type="submit"><img src="svg/search-icon.svg"></button></input>
       </form>
 </div>
 
 <?php if(isset($_SESSION['username'])) { ?>
 
-    <li><a href="upload">Upload</a></li>
-    <li><a href="logout">Abonnements</a></li>
-    <li><a href="profil"> <img class="profil-img" style="width: 40px; height: 40px; border-radius: 50%;" src="upload-pfp/<?= $user['profile_picture'] ?>"><h1><?=$username?></a></li>
+    <li><a href="upload"><img class="upload-icon" src="svg/upload-icon.svg"></a></li>
+    <li><a href="profil"><img class="profil-img" style="width: 40px; height: 40px; border-radius: 50%;" src="upload-pfp/<?= $user['profile_picture'] ?>"></a></li>
+    <li><a class="profil-username" href="profil"><?= $username ?></a></li>
+    <form action="search.php" method="GET">
+        <button class="text-search-mobile" type="submit"><img src="svg/search-icon.svg"></button>
+    </form>
     <?php } else { ?>
         <li><a href="login">Connexion</a></li>
         <li><a href="register">S'enregistrer</a></li>
     <?php } ?>
   </ul>
 </nav>
+<script src="https://unpkg.com/split-type@0.3.3/umd/index.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+
+<script>
+    const logo = new
+</script>
+
 </body>
