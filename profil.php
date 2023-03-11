@@ -61,18 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Profil</title>
     <!-- Inclusion de CSS pour le style -->
     <link rel="stylesheet" type="text/css" href="css/profil.css">
-   
 
 </head>
 <body>
+<br /><br /><br />
     <div class="profil-container">
-    <h1>Profil de <?= $user['username'] ?></h1> 
-    <ul>
-        <li>Photo de profil : <img style="width: 100px; max-height: 100px; border-radius: 50%;" src="upload-pfp/<?= $user['profile_picture'] ?>"></li>
+       <img class="profil-img" style="width: 150px; height: 150px; border-radius: 50%;" src="upload-pfp/<?= $user['profile_picture'] ?>"><h1>Profil de <?= $user['username'] ?></h1> 
+     <ul>
         <li>Nom d'utilisateur : <?= $user['username'] ?></li>
         <li>Date de création du compte : <?= $user['created_at'] ?></li>
         <li>Adresse mail : <?= $user['email'] ?></li>
-    </ul>
+     </ul>
+     <br />
 
     <?php if (isset($error)): ?>
         <p class="error"><?= $error ?></p>
@@ -88,12 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label for="current_password">Mot de passe actuel :</label>
         <input type="password" name="current_password" required>
-
+        <br />
         <label for="new_password">Nouveau mot de passe :</label>
         <input type="password" name="new_password" required>
 
         <button type="submit">Changer le mot de passe</button>
     </form>
+
+    <br />
 
     <h2>Changer le nom d'utilisateur</h2>
     <form method="POST">
@@ -106,16 +108,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <form action="upload-pfp.php" method="post" enctype="multipart/form-data">
-  <input type="file" id="text" name="profile_picture" id="profile_picture" accept="image/*" onchange="previewPicture(this)" required>
+  <input type="file" id="text" name="profile_picture" id="profile_picture" onchange="previewPicture(this)" required>
   <input type="submit" value="Upload">
    </form>
+   
+   <p class="logout"><a href="logout">Se déconnecter</a></p>
 </div>
 
+<br />
 
-    <p><a href="logout">Se déconnecter</a></p>
-    <script type="text/javascript" >
+    <script>
     // L'image img#image
-    var image = document.getElementById("image");
+    var image = document.getElementById("profile_picture");
      
     // La fonction previewPicture
     var previewPicture  = function (e) {

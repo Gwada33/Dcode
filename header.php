@@ -8,6 +8,11 @@ session_start();
 
 $username = $_SESSION['username'];
 
+$sql = "SELECT * FROM users WHERE id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$_SESSION['user_id']]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -15,33 +20,23 @@ $username = $_SESSION['username'];
 <head>
 	<link rel="stylesheet" type="text/css" href="css/navbar.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <style>
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 800,
-  'GRAD' 0,
-  'opsz' 48
-}
-</style>
 </head>
 <body>
 <nav>
   <ul>
-    <li><a href="index">Accueil</a></li>
+    <li><a class="home" href="index">Acceuil</a></li>
     <li>
     <div class="search-container">
     <form action="search.php" method="GET">
-        <input type="text" name="query" placeholder="Recherche...">
-        <button type="submit">Rechercher</button>
+        <input class="text-search" type="text" name="query" placeholder="Recherche..."><button type="submit"></button></input>
       </form>
 </div>
 
 <?php if(isset($_SESSION['username'])) { ?>
 
     <li><a href="upload">Upload</a></li>
-    <li><a href="profil">Mon compte</a></li>
-    <li><a href="logout">Déconnexion</a></li>
+    <li><a href="logout">Abonnements</a></li>
+    <li><a href="profil"> <img class="profil-img" style="width: 40px; height: 40px; border-radius: 50%;" src="upload-pfp/<?= $user['profile_picture'] ?>"><h1><?=$username?></a></li>
     <?php } else { ?>
         <li><a href="login">Connexion</a></li>
         <li><a href="register">S'enregistrer</a></li>

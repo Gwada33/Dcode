@@ -68,7 +68,7 @@ $subscription = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
     <h1><?= $user['username'] ?> - Chaine</h1>
     <ul>
-        <li><img style="width: 100px; max-height: 100px; border-radius: 50%;" src="upload-pfp/<?= $user['profile_picture'] ?>"> <?= $user['username'] ?></li>
+        <li><img style="width: 100px; height: 100px; border-radius: 50%;" src="upload-pfp/<?= $user['profile_picture'] ?>"> <?= $user['username'] ?></li>
         <li>Date de création du compte : <?= $user['created_at'] ?></li>
         <li>Nombre d'abonnements : <?= $subscription_count ?></li>
     </ul>

@@ -14,6 +14,7 @@ try {
 
 
 
+
 if (isset($_COOKIE['remember_me']) && !isset($_SESSION['user_id'])) {
     // Si un cookie "se souvenir de moi" existe mais que l'utilisateur n'est pas connecté
     // on essaie de le connecter avec les informations stockées dans le cookie
@@ -40,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];

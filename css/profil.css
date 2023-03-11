@@ -1,8 +1,25 @@
 body{
-    color: #fff;
+    color: #ffffff;
     font-family: 'Montserrat', sans-serif;
 }
 
 .profil-container{
     margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
+
+.profil-container .profil-img{
+    border: 5px dashed #fff;
+}
+
+.logout a{
+    padding: 10px 10px 10px 10px;
+    background: #2550ed;
+    color: #fff;
+    border-radius: 10px;
+    transform: translateY(10px);
+}   

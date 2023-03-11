@@ -1,9 +1,135 @@
+body{
+    overflow-x: hidden;
+}
+
 .views-container{
     margin-top: 30px;
+    transform: translateX(30px);
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 35px;
     color: #ffff;
+}
+
+.description-channel-container{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(30px);
+    width: 50%;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+.channel{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+
+.comment-section{
+    width: 50%;
+    height: calc(max-content + 100px);
+}
+
+.comment-section h2{
+    font-size: 20px;
+    margin-top: 40px;
+    transform: translate(30px);
+    color: #fff;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.comment-section form input[type="text"] {
+    transform: translateX(30px);
+    padding: 20px 20px 20px 20px;
+    width: 60%;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+}
+
+.comment-section form input[type="submit"] {
+    width: 20%;
+    height: 55.5px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: none;
+    background: #2550ed;
+    color: #ffffff;
+    margin-left: -10px;
+    transform: translateY(1px);
+    font-size: 15px;
+}
+
+.material-symbols-outlined{
+    scale: 1.5;
+}
+
+.comments{
+    margin-top: 50px;
+    padding: 10px 10px 10px 10px;
+    transform: translateX(30px);
+    color: #fff;
+    border-radius: 15px;
+    margin-top: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.comments .reply3{
+        width: 300px;
+        height: 200px;
+        resize: none;
+        overflow: hidden;
+}
+
+.replies .reply h4{
+    margin-left: 50px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.comments .comment a{
+    margin-left: 30px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+}
+
+
+.comments .comment p{
+    margin-top: 10px;
+    margin-left: 30px;
+    text-decoration: none;
+    color: #bdbdbd;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.replies .reply h4{
+    font-size: 17px;
+    margin-left: 50px;
+    margin-top: 5px;
+
+}
+
+.collapser
+
+.replies .reply p{
+    font-size: 14px;
+    margin-left: 70px;
+    margin-top: 5px;
+
 }
 
 video{

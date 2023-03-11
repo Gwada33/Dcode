@@ -15,6 +15,7 @@ try {
 
 if (isset($_POST['comment']) && !empty($_POST['comment']) && isset($_SESSION['user_id']) && isset($_GET['id'])) {
     $comment = $_POST['comment'];
+    $comment = nl2br($comment);
     $user_id = $_SESSION['user_id'];
     $video_id = $_GET['id'];
     $username = $_SESSION['username'];
@@ -23,7 +24,7 @@ if (isset($_POST['comment']) && !empty($_POST['comment']) && isset($_SESSION['us
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$video_id, $user_id, $comment, $username]);
 
-    header('Location: watch?id='.$video_id.'');
+    header('Location: watch?id='. $video_id);
 }
 
 ?>

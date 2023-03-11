@@ -55,6 +55,7 @@ if(isset($_POST['comment'])) {
 if(isset($_POST['reply']) && isset($_POST['comment_id']) && isset($_POST['parent_id'])) {
     $reply = $_POST['reply'];
     $comment_id = $_POST['comment_id'];
+    $reply = nl2br($reply);
     $parent_id = $_POST['parent_id'];
     $video_id = $_POST['video_id'];
     $user_id = $_SESSION['user_id'];
@@ -117,6 +118,8 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </video>
 </div>
 
+<br />
+
 <div class="views-container">
   <ul>
     <?php
@@ -124,18 +127,33 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $id = $_GET['id'] ?? null;
     
     if ($id) {
-        // Ajouter la vue dans la base de données
-        $stmt = $pdo->prepare("INSERT INTO views (user_id, video_id) VALUES (?, ?)");
+        // Vérifier si l'utilisateur a déjà vu la vidéo
+        $stmt = $pdo->prepare("SELECT COUNT(*) AS already_viewed FROM views WHERE user_id = ? AND video_id = ?");
         $stmt->execute([$_SESSION['user_id'], $id]);
+        $already_viewed = $stmt->fetch(PDO::FETCH_ASSOC)['already_viewed'];
         
-        // Récupérer le nombre de vues pour cette vidéo
-        $sql = "SELECT COUNT(v.id) AS views_count FROM users u LEFT JOIN views v ON u.id = v.user_id WHERE v.video_id = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
-        $views = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Afficher le nombre de vues
-        echo ("<h2>" . $views['views_count'] . " vues</h2>");
+        if ($already_viewed) {
+            // L'utilisateur a déjà vu la vidéo, afficher le nombre de vues actuel
+            $sql = "SELECT COUNT(v.id) AS views_count FROM views v WHERE v.video_id = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id]);
+            $views = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            echo $views['views_count'] . " vues";
+        } else {
+            // Ajouter la vue dans la base de données
+            $stmt = $pdo->prepare("INSERT INTO views (user_id, video_id) VALUES (?, ?)");
+            $stmt->execute([$_SESSION['user_id'], $id]);
+            
+            // Récupérer le nombre de vues pour cette vidéo
+            $sql = "SELECT COUNT(v.id) AS views_count FROM views v WHERE v.video_id = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id]);
+            $views = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Afficher le nombre de vues
+            echo $views['views_count'] . " vues";
+        }
     } else {
         echo "Impossible de récupérer l'ID de la vidéo";
     }
@@ -143,16 +161,28 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </ul>
 </div>
 
+<br />
+<br />
+
+<div class="description-channel-container">
+    <ul class="description">
+    <p><?= $video['description'] ?></p>
+    </ul>
+    <ul class="channel">
+    <img style="width: 50px; height: 50px; border-radius: 50%;" src="upload-pfp/<?= $video['profile_picture'] ?>">
+        <a href="channel?username=<?= $video['username'] ?>"><h2><?= $video['username'] ?></h2></a>
+    </ul>
+</div>
 
 
 
 
 <!-- Formulaire pour ajouter un commentaire -->
 <div class="comment-section">
-    <h2>Commentaires</h2>
+    <h2>Commentaires</h2> <br />
     <?php if(isset($_SESSION['username'])) { ?>
     <form action="watch?id=<?= $video['id']?>" method="post">
-        <textarea name="comment" placeholder="Votre commentaire" required></textarea>
+        <input type="text" name="comment" placeholder="Votre commentaire" required></input>
         <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
         <input type="hidden" name="parent_id" value="0">
         <input type="submit" value="Envoyer">
@@ -180,6 +210,32 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     $stmt->execute([$comment['id']]);
                     $replies = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 ?>
+            <div class="collapser">
+                <?php
+               $sql = "SELECT COUNT(*) AS count FROM comment_replies WHERE comment_id = ?";
+               $stmt = $pdo->prepare($sql);
+               $stmt->execute([$comment['id']]);
+               $count = $stmt->fetchColumn();
+
+               $sql = "SELECT COUNT(*) AS count FROM comment_replies WHERE comment_id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$comment['id']]);
+$count = $stmt->fetchColumn();
+
+if ($count < 0) {
+    $sql = "SELECT cr.*, u.username FROM comment_replies cr LEFT JOIN users u ON cr.user_id = u.id WHERE cr.comment_id = ? ORDER BY cr.created_at ASC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$comment['id']]);
+    $replies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // afficher les réponses ici
+} elseif ($count > 0) {
+    echo "<a>" . $count . "replies</a>";
+}
+
+              
+               
+                ?>
                 <div class="replies">
                     <?php if(!empty($replies)) { ?>
                     <?php foreach ($replies as $reply) { ?>
@@ -188,13 +244,13 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <p><?= $reply['reply'] ?></p>
                     </div>
                     <?php } ?>
-                    <?php } else { ?>
-                    <p>Aucune réponse pour le moment</p>
                     <?php } ?>
                 </div>
+            </div>
+                
                 <?php if(isset($_SESSION['username'])) { ?>
                 <form action="watch?id=<?= $video['id']?>" method="post">
-                    <textarea name="reply" placeholder="Votre réponse" required></textarea>
+                    <textarea class="reply3" name="reply" placeholder="Votre réponse" required></textarea>
                     <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
                     <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
                     <input type="hidden" name="parent_id" value="<?= $comment['id'] ?>">

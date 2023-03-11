@@ -39,13 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowed_exts = array('jpg', 'jpeg', 'png');
         if (in_array($file_ext, $allowed_exts)) {
             // Vérification de la taille du fichier
-            $max_file_size = 1024 * 1024 * 2; // 2 MB
-            if ($file_size <= $max_file_size) {
-                // Traitement de l'image
-             
+            $max_file_size = 1024 * 1024 * 5; // 2 MB
+            if ($file_size <= $max_file_size) { 
                 // Enregistrement de l'image sur le serveur
                 $file_name = uniqid() . '.' . $file_ext;
                 $file_path = 'upload-pfp/' . $file_name;
+                move_uploaded_file($file_tmp_name, $file_path);
                 
                 // Mise à jour du profil de l'utilisateur
                 $sql = "UPDATE users SET profile_picture = ? WHERE id = ?";
@@ -53,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$file_name, $user['id']]);
 
                 // Redirection vers la page de profil
-                header('Location: profil.php');
+                header('Location: profil');
                 exit;
             } else {
                 $error = 'Le fichier est trop volumineux.';
